@@ -8,6 +8,14 @@
 - remove major_version_zero flag
 - remove major_version_zero flag
 
+## v1.1.5 (2025-03-09)
+
+### Fix
+
+- trigger version bump
+
+## v1.1.4 (2025-03-09)
+
 ## v1.1.0 (2025-03-09)
 
 ### Fix

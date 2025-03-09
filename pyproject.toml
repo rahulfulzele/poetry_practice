@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "my-poetry-project"
-version = "1.1.4"
+version = "1.1.5"
 description = "Your package description"
 authors = ["Rahul <rahoul2010@gmail.com>"]
 readme = "README.md"
