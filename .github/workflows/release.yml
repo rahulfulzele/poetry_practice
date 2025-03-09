@@ -1,0 +1,46 @@
+name: Publish Poetry Package to JFrog Artifactory
+
+on:
+  push:
+    branches:
+      - main  # Run the workflow when pushing to the main branch
+
+permissions:
+  contents: write  # Required for Commitizen to commit version bump
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          pip install poetry commitizen
+          poetry install
+
+      - name: Bump Version with Commitizen
+        run: |
+          cz bump --yes
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add pyproject.toml
+          git commit -m "chore(release): bump version"
+          git push origin main
+
+      - name: Build Package
+        run: |
+          poetry build
+
+      - name: Publish to JFrog Artifactory
+        run: |
+          poetry config repositories.artifactory ${{ secrets.ARTIFACTORY_URL }}/artifactory/${{ secrets.ARTIFACTORY_REPO }}
+          poetry config http-basic.artifactory ${{ secrets.ARTIFACTORY_USER }} ${{ secrets.ARTIFACTORY_PASSWORD }}
+          poetry publish -r artifactory
