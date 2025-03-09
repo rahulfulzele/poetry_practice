@@ -3,7 +3,9 @@ name: Publish Poetry Package to JFrog Artifactory
 on:
   push:
     branches:
-      - main  # Run the workflow when pushing to the main branch
+      - main
+    tags:
+      - 'v*'  # Triggers on version tags like v1.1.2
 
 permissions:
   contents: write  # Required for Commitizen to commit version bump
