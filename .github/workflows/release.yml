@@ -35,13 +35,13 @@ jobs:
 
       - name: Bump Version with Commitizen
         run: |
-          cz bump --yes --changelog --no-check-consistency
+          cz bump --yes --changelog
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add pyproject.toml CHANGELOG.md
           git commit -m "chore(release): bump version"
           git tag $(cz version)  # Automatically create the correct tag
-          git push origin main --tags  # Push tags explicitly
+          git push origin main --tags  # Push the changes and tags explicitly
 
       - name: Build Package
         run: |
