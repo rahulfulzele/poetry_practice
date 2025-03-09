@@ -26,11 +26,14 @@ jobs:
           pip install poetry commitizen
           poetry install
 
+      - name: Configure Git User  # Moved this before cz bump
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Bump Version with Commitizen
         run: |
           cz bump --yes
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add pyproject.toml
           git commit -m "chore(release): bump version"
           git push origin main
